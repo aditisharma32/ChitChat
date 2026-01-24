@@ -5,43 +5,22 @@ import Message from "../models/Message.js";
 // Create an empty object to store SS Event connections
 const connections = {};
 
-// Allowed origins for CORS
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  "https://pingup-1e51.vercel.app",
-];
-
 // controller function for the SSE endpoint
 export const sseController = (req, res) => {
   const { userId } = req.params;
   console.log("New client connected : ", userId);
 
-  // Get the origin from request
-  const origin = req.headers.origin || req.headers.referer?.replace(/\/$/, '') || "https://pingup-1e51.vercel.app";
-  
-  // Set CORS headers FIRST - this is critical for SSE
-  // Always set a specific origin, never use * with SSE
-  const corsOrigin = allowedOrigins.find(o => origin.startsWith(o)) || "https://pingup-1e51.vercel.app";
-  res.setHeader("Access-Control-Allow-Origin", corsOrigin);
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  // Set SSE Headers
+  // Set SSE Header
   res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache, no-transform");
+  res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  res.setHeader("X-Accel-Buffering", "no"); // Important for Vercel/Nginx
-  
-  // Flush headers immediately - critical for SSE to work
-  res.flushHeaders();
+  res.setHeader("Access-Control-Allow-Origin", "*");
 
   // Add the client's response object to the connections object
   connections[userId] = res;
 
   // Send an initial event to the client
-  res.write("event: connected\ndata: Connected to SSE stream\n\n");
+  res.write("log: Connected to SSE stream\n\n");
 
   // Handle client disconnection
   req.on("close", () => {

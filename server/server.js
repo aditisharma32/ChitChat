@@ -15,20 +15,7 @@ const app = express();
 await connectDB();
 
 app.use(express.json());
-
-// CORS configuration - allow all origins for now to debug
-const corsOptions = {
-  origin: true, // Allow all origins
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
-};
-
-app.use(cors(corsOptions));
-
-// Handle preflight requests explicitly
-app.options("*", cors(corsOptions));
-
+app.use(cors());
 app.use(clerkMiddleware());
 
 app.get("/", (req, res) => res.send("Server is Running"));
