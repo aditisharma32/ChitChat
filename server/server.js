@@ -15,7 +15,21 @@ const app = express();
 await connectDB();
 
 app.use(express.json());
-app.use(cors());
+
+// CORS configuration to allow frontend origins
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://pingup-1e51.vercel.app",
+    process.env.FRONTEND_URL, // Allow the FRONTEND_URL from .env
+  ].filter(Boolean), // Remove undefined/null values
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 app.use(clerkMiddleware());
 
 app.get("/", (req, res) => res.send("Server is Running"));

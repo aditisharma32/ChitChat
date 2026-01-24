@@ -10,17 +10,33 @@ export const sseController = (req, res) => {
   const { userId } = req.params;
   console.log("New client connected : ", userId);
 
-  // Set SSE Header
+  // Set SSE Headers with full CORS support
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("X-Accel-Buffering", "no"); // Important for Vercel/Nginx
+  
+  // CORS headers for SSE
+  const origin = req.headers.origin;
+  const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "https://pingup-1e51.vercel.app",
+    process.env.FRONTEND_URL,
+  ].filter(Boolean);
+  
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  } else {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+  }
+  res.setHeader("Access-Control-Allow-Credentials", "true");
 
   // Add the client's response object to the connections object
   connections[userId] = res;
 
   // Send an initial event to the client
-  res.write("log: Connected to SSE stream\n\n");
+  res.write("event: connected\ndata: Connected to SSE stream\n\n");
 
   // Handle client disconnection
   req.on("close", () => {
