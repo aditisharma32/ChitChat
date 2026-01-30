@@ -15,7 +15,7 @@ const Login = () => {
 
       {/* left side: Branding */}
       <div className="flex-1 flex flex-col items-start justify-between p-6 md:p-10 lg:pl-40">
-        <img src={assets.logo} className="h-12 object-contain" alt="" />
+        <img src={assets.logo} className="w-26 object-contain" alt="" />
         <div>
           <div className="flex items-center gap-3 mb-4 max-md:mt-10">
             <img src={assets.group_users} className="h-8 md:h-10" alt="" />
@@ -37,7 +37,7 @@ const Login = () => {
             More than just friends truly connect
           </h1>
           <p className="text-xl md:text-3xl text-indigo-900 max-w-72 md:max-w-md">
-            connect with global community on pingup.
+            connect with global community on ChitChat.
           </p>
         </div>
         <span className="md:h-10"></span>

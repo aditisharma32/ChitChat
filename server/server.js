@@ -10,11 +10,10 @@ import postRouter from "./routes/postRoutes.js";
 import storyRouter from "./routes/storyRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 
-const app = express();
-
+const app = express(); // created new app instance
 await connectDB();
 
-app.use(express.json());
+app.use(express.json()); // this is a  middleware which converts req.body from json to js object
 app.use(cors());
 app.use(clerkMiddleware());
 
