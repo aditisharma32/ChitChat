@@ -1,5 +1,5 @@
 import { Calendar, MapPin, PenBox, Verified } from "lucide-react";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import React from "react";
 
 const UserProfileInfo = ({ user, posts, profileId, setShowEdit }) => {
@@ -50,7 +50,7 @@ const UserProfileInfo = ({ user, posts, profileId, setShowEdit }) => {
               <Calendar className="size-4" />
               Joined{" "}
               <span className="font-medium">
-                {moment(user.createdAt).fromNow()}
+                {dayjs(user.createdAt).fromNow()}
               </span>
             </span>
           </div>

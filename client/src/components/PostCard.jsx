@@ -1,6 +1,6 @@
 import { BadgeCheck, Heart, MessageCircle, Share2 } from "lucide-react";
 import React, { useState } from "react";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAuth } from "@clerk/clerk-react";
@@ -64,7 +64,7 @@ const PostCard = ({ post }) => {
             <BadgeCheck className="size-4 text-blue-500" />
           </div>
           <div className="text-gray-500 text-sm">
-            @{post.user.username} • {moment(post.createdAt).fromNow()}
+            @{post.user.username} • {dayjs(post.createdAt).fromNow()}
           </div>
         </div>
       </div>

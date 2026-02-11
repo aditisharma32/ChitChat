@@ -1,14 +1,10 @@
-import React, { useRef } from "react";
+import React, { useRef,lazy,Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Login from "./pages/Login";
 import Feed from "./pages/Feed";
-import Message from "./pages/Message";
-import ChatBox from "./pages/ChatBox";
-import Connections from "./pages/Connections";
-import Discover from "./pages/Discover";
-import Profile from "./pages/Profile";
-import CreatePost from "./pages/CreatePost";
 import Layout from "./pages/Layout";
+
+
 import { useUser, useAuth } from "@clerk/clerk-react";
 import toast, { Toaster } from "react-hot-toast";
 import { useEffect } from "react";
@@ -17,6 +13,16 @@ import { fetchUser } from "./features/user/userSlice.js";
 import { fetchConnections } from "./features/connections/connectionSlice.js";
 import { addMessage } from "./features/messages/messagesSlice.js";
 import Notification from "./components/Notification.jsx";
+import Loading from "./components/Loading.jsx";
+
+
+const Message = lazy(() => import("./pages/Message"));
+const ChatBox = lazy(() => import("./pages/ChatBox"));
+const Connections = lazy(() => import("./pages/Connections"));
+const Discover = lazy(() => import("./pages/Discover"));
+const Profile = lazy(() => import("./pages/Profile"));
+const CreatePost = lazy(() => import("./pages/CreatePost"));
+
 
 const App = () => {
   const { user } = useUser();
@@ -69,6 +75,7 @@ const App = () => {
   return (
     <>
       <Toaster />
+      <Suspense fallback = {<Loading/>}>
       <Routes>
         <Route path="/" element={!user ? <Login /> : <Layout />}>
           <Route index element={<Feed />} />
@@ -81,6 +88,7 @@ const App = () => {
           <Route path="create-post" element={<CreatePost />} />
         </Route>
       </Routes>
+      </Suspense>
     </>
   );
 };

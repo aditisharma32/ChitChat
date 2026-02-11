@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import { useAuth, useUser } from "@clerk/clerk-react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
@@ -72,7 +72,7 @@ const RecentMessages = () => {
               <div className="flex justify-between">
                 <p className="font-medium">{message.from_user_id.full_name}</p>
                 <p className="text-[10px] text-slate-400">
-                  {moment(message.createdAt).fromNow()}
+                  {dayjs(message.createdAt).fromNow()}
                 </p>
               </div>
               <div className="flex justify-between">

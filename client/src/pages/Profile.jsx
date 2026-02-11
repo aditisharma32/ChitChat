@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import UserProfileInfo from "../components/UserProfileInfo";
 import PostCard from "../components/PostCard";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import ProfileModel from "../components/ProfileModel";
 import { useAuth } from "@clerk/clerk-react";
 import api from "../api/axios.js";
@@ -117,7 +117,7 @@ const Profile = () => {
                           alt=""
                         />
                         <p className=" absolute bottom-0 right-0 text-xs p-1 px-3 backdrop-blur-xl text-white opacity-0 group-hover:opacity-100 transition duration-300">
-                          Posted {moment(post.createdAt).fromNow()}
+                          Posted {dayjs(post.createdAt).fromNow()}
                         </p>
                       </Link>
                     ))}

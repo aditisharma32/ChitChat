@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dummyStoriesData } from "../assets/assets";
 import { Plus } from "lucide-react";
-import moment from "moment";
+import dayjs from "../utils/dayjs";
 import StoryModel from "./StoryModel";
 import StoryViewer from "./StoryViewer";
 import { useAuth } from "@clerk/clerk-react";
@@ -69,7 +68,7 @@ const StoriesBar = () => {
               {story.content}
             </p>
             <p className="text-white absolute bottom-1 right-2 z-10 text-xs">
-              {moment(story.createdAt).fromNow()}
+              {dayjs(story.createdAt).fromNow()}
             </p>
             {story.media_type !== "text" && (
               <div className=" absolute inset-0 z-1 rounded-lg bg-black overflow-hidden">
